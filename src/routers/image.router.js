@@ -8,6 +8,7 @@ const helper = require('../helper');
 let imageController = new ImageController();
 const schemas = require('../schemas/license.schema');
 const shortid = require('shortid');
+const pkg = require('../../package');
 let licenseDataCache = {};
 
 class ImageRouter extends BaseRouter {
