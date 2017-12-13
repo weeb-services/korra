@@ -1,0 +1,17 @@
+[
+  {
+    "name": "generate_simple",
+    "description": "Generate simple images, like eyes with moving pupils or a preview of an avatar within a discord avatar",
+    "routes": [
+      "/generate",
+      "/discord-status"
+    ]
+  },
+  {
+    "name": "generate_license",
+    "description": "Generate a license image with a number of badges, widgets, a title and an avatar",
+    "routes": [
+      "/license"
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+.avatar {
+    width: 260px;
+    height: 251px;
+    position: absolute;
+    top: 147px;
+    left: 72px;
+    border-radius: 5px;
+}
+
+.header {
+    font-size: 64px;
+    position: absolute;
+    top: 50px;
+    left: 45px;
+}
+
+.badge {
+    border-radius: 5px;
+    position: absolute;
+    top: 414px;
+    width: 75px;
+    height: 70px;
+
+}
+
+.badge-1 {
+    left: 71px;
+}
+
+.badge-2 {
+    left: 164px;
+}
+
+.badge-3 {
+    left: 256px;
+}
+
+.widget {
+    position: absolute;
+    overflow: hidden;
+}
+
+.widget p {
+    padding: 1px;
+    color: black;
+}
+
+.small-widget {
+    width: 210px;
+    height: 130px;
+    top: 135px;
+}
+
+.widget-1 {
+    left: 345px;
+}
+
+.widget-2 {
+    width: 200px;
+    left: 568px;
+}
+
+.widget-3 {
+    top: 280px;
+    left: 345px;
+    width: 423px;
+    height: 210px;
+}
+

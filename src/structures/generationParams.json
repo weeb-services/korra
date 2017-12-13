@@ -1,0 +1,92 @@
+{
+  "won": {
+    "base": "resources/wan_back.png",
+    "elements": [
+      {
+        "image": "resources/wan_mouth.png",
+        "original_position": [
+          399,
+          610
+        ],
+        "base_position": [
+          399,
+          610
+        ],
+        "max": 100
+      },
+      {
+        "image": "resources/wan_eye_right.png",
+        "original_position": [
+          562,
+          433
+        ],
+        "base_position": [
+          562,
+          433
+        ],
+        "max": 70
+      },
+      {
+        "image": "resources/wan_eye_left.png",
+        "original_position": [
+          295,
+          460
+        ],
+        "base_position": [
+          295,
+          460
+        ],
+        "max": 70
+      }
+    ],
+    "generationType": "org_random"
+  },
+  "eyes": {
+    "base": "resources/eyes_back.png",
+    "elements": [
+      {
+        "image": "resources/eyes_pupil.png",
+        "original_position": [
+          20,
+          110
+        ],
+        "base_position": [
+          55,
+          70
+        ],
+        "max": 55,
+        "scale_y": 1.17
+      },
+      {
+        "image": "resources/eyes_pupil.png",
+        "original_position": [
+          210,
+          110
+        ],
+        "base_position": [
+          245,
+          70
+        ],
+        "max": 55,
+        "scale_y": 1.17
+      }
+    ],
+    "generationType": "org_random"
+  },
+  "awooo": {
+    "base": "resources/awooo_bw_clean.png",
+    "elements": {
+      "face": {
+        "image": "resources/awooo_bw_clean_mask_face.png",
+        "color": "fff0d3",
+        "rgbColor": []
+      },
+      "hair": {
+        "image": "resources/awooo_bw_clean_mask_hair.png",
+        "color": "cc817c",
+        "rgbColor": []
+      }
+    },
+    "generationType": "colormask"
+  }
+}
