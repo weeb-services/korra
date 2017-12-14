@@ -57,7 +57,7 @@ let init = async () => {
     // Auth middleware
     app.use(new AuthMiddleware(config.irohHost, `${pkg.name}-${config.env}`, config.whitelist).middleware());
 
-    app.use(new PermMiddleware().middleware());
+    app.use(new PermMiddleware(pkg.name, config.env).middleware());
 
     // Routers
     app.use(new GenericRouter(pkg.version, `Welcome to the ${pkg.name} api`, `${pkg.name}-${config.env}`, permNodes).router());
