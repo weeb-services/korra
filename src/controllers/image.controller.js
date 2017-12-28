@@ -2,7 +2,7 @@ const generations = require('../structures/generationParams');
 const organizedRandomGenerator = require('../generators/organized-random.generator');
 const colorMaskGenerator = require('../generators/color-mask.generator');
 const discordStatusGenerator = require('../generators/discord-status.generator');
-const licenseGenerator = require('../generators/license-generator');
+const browserGenerator = require('../generators/browser-generator');
 const TinyColor = require('tinycolor2');
 
 class ImageController {
@@ -23,7 +23,17 @@ class ImageController {
     }
 
     async generateLicense(browser, host, port, requestId) {
-        return licenseGenerator.generate(browser, `http://${host}:${port}/license-template?requestId=${requestId}`);
+        return browserGenerator.generate(browser, `http://${host}:${port}/license-template?requestId=${requestId}`, {
+            width: 812,
+            height: 540
+        });
+    }
+
+    async generateWaifuInsult(browser, host, port, requestId) {
+        return browserGenerator.generate(browser, `http://${host}:${port}/waifu-insult-template?requestId=${requestId}`, {
+            width: 450,
+            height: 344
+        });
     }
 
     async _generateOrgRandom(typeParams, original) {
