@@ -5,4 +5,4 @@ const licenseSchema = Joi.object().keys({
     widgets: Joi.array().items(Joi.string().required().allow('')).max(3),
     badges: Joi.array().items(Joi.string().required()).max(3)
 });
-module.exports = {licenseSchema};
+module.exports = licenseSchema;
