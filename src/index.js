@@ -17,14 +17,14 @@ const AuthMiddleware = require('wapi-core').AccountAPIMiddleware;
 const PermMiddleware = require('wapi-core').PermMiddleware;
 
 const puppeteer = require('puppeteer');
-
+const Raven = require('raven');
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {
     timestamp: true,
     colorize: true,
 });
 
-let init = async () => {
+let init = async() => {
     let config;
     try {
         config = require('../config/main.json');
@@ -34,7 +34,20 @@ let init = async () => {
         return process.exit(1);
     }
     winston.info('Config loaded.');
-
+    if (config.ravenKey && config.ravenKey !== '' && config.env !== 'development') {
+        Raven.config(config.ravenKey, {release: pkg.version, environment: config.env})
+            .install((err, sendErr, eventId) => {
+                if (!sendErr) {
+                    winston.info('Successfully sent fatal error with eventId ' + eventId + ' to Sentry:');
+                    winston.error(err.stack);
+                }
+                winston.error(sendErr);
+                process.exit(1);
+            });
+        Raven.on('error', (e) => {
+            winston.error('Raven Error', e);
+        });
+    }
     // Initialize express
     let app = express();
 
@@ -43,6 +56,9 @@ let init = async () => {
     app.use((req, res, next) => {
         req.config = config;
         req.browser = browser;
+        if (config.ravenKey && config.ravenKey !== '' && config.env !== 'development') {
+            req.Raven = Raven;
+        }
         next();
     });
 
