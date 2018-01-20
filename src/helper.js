@@ -1,6 +1,6 @@
 const axios = require('axios');
 const Url = require('url');
-
+const winston = require('winston');
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -52,4 +52,10 @@ function verifyUrl(url) {
     return Url.parse(url);
 }
 
-module.exports = {getRandomArbitrary, def, getBuffer, distance, getImage, verifyUrl};
+function trackErrorRaven(Raven, error, data) {
+    Raven.captureException(error, data, (err) => {
+        winston.error(err);
+    });
+}
+
+module.exports = {getRandomArbitrary, def, getBuffer, distance, getImage, verifyUrl, trackErrorRaven};

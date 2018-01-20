@@ -19,21 +19,21 @@ class ImageController {
     }
 
     async generateStatus(status, image) {
-        return discordStatusGenerator.generate(status, image)
+        return discordStatusGenerator.generate(status, image);
     }
 
-    async generateLicense(browser, host, port, requestId) {
+    async generateLicense(browser, host, port, requestId, imageUrls = []) {
         return browserGenerator.generate(browser, `http://${host}:${port}/license-template?requestId=${requestId}`, {
             width: 812,
             height: 540
-        });
+        }, imageUrls);
     }
 
-    async generateWaifuInsult(browser, host, port, requestId) {
+    async generateWaifuInsult(browser, host, port, requestId, imageUrls = []) {
         return browserGenerator.generate(browser, `http://${host}:${port}/waifu-insult-template?requestId=${requestId}`, {
             width: 450,
             height: 344
-        });
+        }, imageUrls);
     }
 
     async _generateOrgRandom(typeParams, original) {
