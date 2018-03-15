@@ -1,7 +1,7 @@
 'use strict';
 const GenerationError = require('../structures/GenerationError');
-const BaseRouter = require('wapi-core').BaseRouter;
-const HTTPCodes = require('wapi-core').Constants.HTTPCodes;
+const BaseRouter = require('@weeb_services/wapi-core').BaseRouter;
+const HTTPCodes = require('@weeb_services/wapi-core').Constants.HTTPCodes;
 const generations = require('../structures/generationParams');
 const ImageController = require('../controllers/image.controller');
 const statusTypes = require('../structures/statusConstants').statusTypes;

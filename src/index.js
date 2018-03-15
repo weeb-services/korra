@@ -8,13 +8,13 @@ const cors = require('cors');
 const pkg = require('../package.json');
 const permNodes = require('./permNodes.json');
 
-const GenericRouter = require('wapi-core').GenericRouter;
-const WildcardRouter = require('wapi-core').WildcardRouter;
+const GenericRouter = require('@weeb_services/wapi-core').GenericRouter;
+const WildcardRouter = require('@weeb_services/wapi-core').WildcardRouter;
 
 const ImageRouter = require('./routers/image.router');
 
-const AuthMiddleware = require('wapi-core').AccountAPIMiddleware;
-const PermMiddleware = require('wapi-core').PermMiddleware;
+const AuthMiddleware = require('@weeb_services/wapi-core').AccountAPIMiddleware;
+const PermMiddleware = require('@weeb_services/wapi-core').PermMiddleware;
 
 const puppeteer = require('puppeteer');
 const Raven = require('raven');
