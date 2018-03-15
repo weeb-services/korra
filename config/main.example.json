@@ -4,6 +4,11 @@
   "env": "development",
   "ravenKey": "",
   "track": "",
+  "registration": {
+    "enabled": false,
+    "host": "",
+    "token": ""
+  },
   "whitelist": [
     {
       "path": "/"
