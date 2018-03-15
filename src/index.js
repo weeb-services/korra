@@ -15,6 +15,7 @@ const ImageRouter = require('./routers/image.router');
 
 const AuthMiddleware = require('@weeb_services/wapi-core').AccountAPIMiddleware;
 const PermMiddleware = require('@weeb_services/wapi-core').PermMiddleware;
+const TrackMiddleware = require('@weeb_services/wapi-core').TrackingMiddleware;
 
 const puppeteer = require('puppeteer');
 const Raven = require('raven');
@@ -72,6 +73,10 @@ let init = async() => {
 
     // Auth middleware
     app.use(new AuthMiddleware(config.irohHost, `${pkg.name}-${config.env}`, config.whitelist).middleware());
+
+    if (config.track) {
+        app.use(new TrackMiddleware(pkg.name, pkg.version, config.env, config.track).middleware());
+    }
 
     app.use(new PermMiddleware(pkg.name, config.env).middleware());
 
