@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    background-color: transparent;
+}
+
+.target {
+    width: 200px;
+    height: 200px;
+}
+
+.heart {
+    width: 200px;
+    height: 200px;
+}

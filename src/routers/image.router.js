@@ -189,7 +189,6 @@ class ImageRouter extends BaseRouter {
         this.router()
             .post('/waifu-insult', async(req, res) => {
                 if (req.account && !req.account.perms.all && !req.account.perms.generate_waifu_insult) {
-                    console.log(req.account);
                     return res.status(HTTPCodes.FORBIDDEN)
                         .json({
                             status: HTTPCodes.FORBIDDEN,
@@ -219,6 +218,69 @@ class ImageRouter extends BaseRouter {
                 templateRequestCache[requestId] = req.body;
                 try {
                     let file = await imageController.generateWaifuInsult(req.browser, req.config.host, req.config.port, requestId, [req.body.avatar]);
+                    res.set('Content-Type', 'image/png');
+                    delete templateRequestCache[requestId];
+                    return res.status(HTTPCodes.OK)
+                        .send(file);
+                } catch (e) {
+                    delete templateRequestCache[requestId];
+                    if (e instanceof GenerationError) {
+                        if (req.Raven) {
+                            helper.trackErrorRaven(req.Raven, e, {req, user: req.account});
+                        }
+                        return res.status(HTTPCodes.BAD_REQUEST)
+                            .json({
+                                status: HTTPCodes.BAD_REQUEST,
+                                message: 'Failed to generate image',
+                                error: e.toString()
+                            });
+                    } else {
+                        if (req.Raven) {
+                            helper.trackErrorRaven(req.Raven, e, {req, user: req.account});
+                        }
+                        winston.error(e);
+                        return res.status(HTTPCodes.INTERNAL_SERVER_ERROR)
+                            .json({
+                                status: HTTPCodes.INTERNAL_SERVER_ERROR,
+                                message: 'Internal Server Error',
+                                error: e.toString()
+                            });
+                    }
+                }
+            });
+        this.router()
+            .post('/love-ship', async(req, res) => {
+                if (req.account && !req.account.perms.all && !req.account.perms.generate_love_ship) {
+                    return res.status(HTTPCodes.FORBIDDEN)
+                        .json({
+                            status: HTTPCodes.FORBIDDEN,
+                            message: `missing scope ${pkg.name}-${req.config.env}:generate_love_ship`,
+                        });
+                }
+                let bodyCheck = schemas.loveShip.validate(req.body);
+                if (bodyCheck.error) {
+                    return res.status(HTTPCodes.BAD_REQUEST)
+                        .json({
+                            status: HTTPCodes.BAD_REQUEST,
+                            message: bodyCheck.error.toString(),
+                            in: 'body'
+                        });
+                }
+                try {
+                    helper.verifyUrl(req.body.targetOne);
+                    helper.verifyUrl(req.body.targetTwo);
+                } catch (e) {
+                    winston.error(e);
+                    return res.status(HTTPCodes.BAD_REQUEST)
+                        .json({
+                            status: HTTPCodes.BAD_REQUEST,
+                            message: 'invalid avatar url'
+                        });
+                }
+                let requestId = shortid.generate();
+                templateRequestCache[requestId] = req.body;
+                try {
+                    let file = await imageController.generateLoveShip(req.browser, req.config.host, req.config.port, requestId, [req.body.targetOne, req.body.targetTwo]);
                     res.set('Content-Type', 'image/png');
                     delete templateRequestCache[requestId];
                     return res.status(HTTPCodes.OK)
@@ -311,9 +373,38 @@ class ImageRouter extends BaseRouter {
                         });
                 }
             });
+        this.router()
+            .get('/love-ship-template', async(req, res) => {
+                try {
+                    if (!req.query.requestId) {
+                        return res.status(HTTPCodes.BAD_REQUEST)
+                            .json({
+                                status: HTTPCodes.BAD_REQUEST,
+                                message: 'invalid request'
+                            });
+                    }
+                    if (!templateRequestCache[req.query.requestId]) {
+                        return res.status(HTTPCodes.BAD_REQUEST)
+                            .json({
+                                status: HTTPCodes.BAD_REQUEST,
+                                message: 'invalid request'
+                            });
+                    }
+                    return res.render('loveship', templateRequestCache[req.query.requestId]);
+                } catch (e) {
+                    if (req.Raven) {
+                        helper.trackErrorRaven(req.Raven, e, {req, user: req.account});
+                    }
+                    winston.error(e);
+                    return res.status(500)
+                        .json({
+                            status: HTTPCodes.INTERNAL_SERVER_ERROR,
+                            message: 'Internal Server Error',
+                            error: e.toString()
+                        });
+                }
+            });
     }
-
-
 }
 
 module.exports = ImageRouter;
