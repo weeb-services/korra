@@ -12,6 +12,7 @@ const shortid = require('shortid');
 const pkg = require('../../package');
 let templateRequestCache = {};
 const winston = require('winston');
+const {checkPermissions, buildMissingScopeMessage} = require('@weeb_services/wapi-core').Utils;
 
 class ImageRouter extends BaseRouter {
     constructor() {
@@ -19,11 +20,11 @@ class ImageRouter extends BaseRouter {
         this.router()
             .get('/generate', async(req, res) => {
                 try {
-                    if (req.account && !req.account.perms.all && !req.account.perms.generate_simple) {
+                    if (!checkPermissions(req.account, ['generate_simple'])) {
                         return res.status(HTTPCodes.FORBIDDEN)
                             .json({
                                 status: HTTPCodes.FORBIDDEN,
-                                message: `missing scope ${pkg.name}-${req.config.env}:generate_simple`,
+                                message: buildMissingScopeMessage(pkg.name, req.config.env, ['generate_simple'])
                             });
                     }
                     if (!req.query.type) {
@@ -63,11 +64,11 @@ class ImageRouter extends BaseRouter {
         this.router()
             .get('/discord-status', async(req, res) => {
                 try {
-                    if (req.account && !req.account.perms.all && !req.account.perms.generate_simple) {
+                    if (!checkPermissions(req.account, ['generate_simple'])) {
                         return res.status(HTTPCodes.FORBIDDEN)
                             .json({
                                 status: HTTPCodes.FORBIDDEN,
-                                message: `missing scope ${pkg.name}-${req.config.env}:generate_simple`,
+                                message: buildMissingScopeMessage(pkg.name, req.config.env, ['generate_simple'])
                             });
                     }
                     let status = 'online';
@@ -113,11 +114,11 @@ class ImageRouter extends BaseRouter {
             });
         this.router()
             .post('/license', async(req, res) => {
-                if (req.account && !req.account.perms.all && !req.account.perms.generate_license) {
+                if (!checkPermissions(req.account, ['generate_license'])) {
                     return res.status(HTTPCodes.FORBIDDEN)
                         .json({
                             status: HTTPCodes.FORBIDDEN,
-                            message: `missing scope ${pkg.name}-${req.config.env}:generate_license`,
+                            message: buildMissingScopeMessage(pkg.name, req.config.env, ['generate_license'])
                         });
                 }
                 let bodyCheck = schemas.license.validate(req.body);
@@ -188,11 +189,11 @@ class ImageRouter extends BaseRouter {
             });
         this.router()
             .post('/waifu-insult', async(req, res) => {
-                if (req.account && !req.account.perms.all && !req.account.perms.generate_waifu_insult) {
+                if (!checkPermissions(req.account, ['generate_waifu_insult'])) {
                     return res.status(HTTPCodes.FORBIDDEN)
                         .json({
                             status: HTTPCodes.FORBIDDEN,
-                            message: `missing scope ${pkg.name}-${req.config.env}:generate_waifu_insult`,
+                            message: buildMissingScopeMessage(pkg.name, req.config.env, ['generate_waifu_insult'])
                         });
                 }
                 let bodyCheck = schemas.waifuInsult.validate(req.body);
@@ -250,11 +251,11 @@ class ImageRouter extends BaseRouter {
             });
         this.router()
             .post('/love-ship', async(req, res) => {
-                if (req.account && !req.account.perms.all && !req.account.perms.generate_love_ship) {
+                if (!checkPermissions(req.account, ['generate_love_ship'])) {
                     return res.status(HTTPCodes.FORBIDDEN)
                         .json({
                             status: HTTPCodes.FORBIDDEN,
-                            message: `missing scope ${pkg.name}-${req.config.env}:generate_love_ship`,
+                            message: buildMissingScopeMessage(pkg.name, req.config.env, ['generate_love_ship'])
                         });
                 }
                 let bodyCheck = schemas.loveShip.validate(req.body);

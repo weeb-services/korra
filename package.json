@@ -4,7 +4,7 @@
   "description": "a simple image generation api",
   "main": "src/index.js",
   "dependencies": {
-    "@weeb_services/wapi-core": "^1.4.1-alpha8",
+    "@weeb_services/wapi-core": "^1.4.1",
     "axios": "^0.17.1",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
