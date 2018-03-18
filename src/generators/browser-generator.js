@@ -15,7 +15,7 @@ async function generate(browser, url, viewport, imageUrls) {
         });
         page.setViewport(viewport);
         await page.goto(url, {waitUntil: 'load'});
-        let image = await page.screenshot();
+        let image = await page.screenshot({omitBackground: true});
         await page.close();
         page.removeAllListeners();
         return resolve(image);

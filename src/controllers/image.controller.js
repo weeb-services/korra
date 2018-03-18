@@ -36,6 +36,13 @@ class ImageController {
         }, imageUrls);
     }
 
+    async generateLoveShip(browser, host, port, requestId, imageUrls = []) {
+        return browserGenerator.generate(browser, `http://${host}:${port}/love-ship-template?requestId=${requestId}`, {
+            width: 610,
+            height: 200
+        }, imageUrls);
+    }
+
     async _generateOrgRandom(typeParams, original) {
         return organizedRandomGenerator.generate(typeParams, original);
     }

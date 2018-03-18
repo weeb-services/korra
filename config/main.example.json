@@ -3,6 +3,12 @@
   "port": 9030,
   "env": "development",
   "ravenKey": "",
+  "track": "",
+  "registration": {
+    "enabled": false,
+    "host": "",
+    "token": ""
+  },
   "whitelist": [
     {
       "path": "/"
@@ -12,6 +18,9 @@
     },
     {
       "path": "/waifu-insult-template"
+    },
+    {
+      "path": "/love-ship-template"
     }
   ],
   "irohHost": "http://localhost:9010"

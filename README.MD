@@ -9,3 +9,8 @@ A general image generation api to generate great memes
 3. Get iroh from here: [iroh](https://github.com/weeb-services/iroh)
 4. Create an iroh account and make sure you set the host correctly
 5. profit.
+
+
+## Used Sources
+
+- [Heart Wings Icon](http://game-icons.net/delapouite/originals/heart-wings.html) (Adjusted colors)
