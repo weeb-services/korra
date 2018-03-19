@@ -1,6 +1,6 @@
 {
   "name": "korra",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "a simple image generation api",
   "main": "src/index.js",
   "dependencies": {
