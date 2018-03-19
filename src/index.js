@@ -24,6 +24,7 @@ const Registrator = require('@weeb_services/wapi-core').Registrator;
 const ShutdownHandler = require('@weeb_services/wapi-core').ShutdownHandler;
 
 const config = require('../config/main');
+const util = require('util');
 
 let registrator;
 
@@ -41,7 +42,7 @@ winston.add(winston.transports.Console, {
 let init = async() => {
     winston.info('Config loaded.');
     if (config.ravenKey && config.ravenKey !== '' && config.env !== 'development') {
-        Raven.config(config.ravenKey, {release: pkg.version, environment: config.env})
+        Raven.config(config.ravenKey, {release: pkg.version, environment: config.env, captureUnhandledRejections: true})
             .install((err, sendErr, eventId) => {
                 if (!sendErr) {
                     winston.info('Successfully sent fatal error with eventId ' + eventId + ' to Sentry:');
@@ -115,3 +116,6 @@ init()
 
 process.on('SIGTERM', () => shutdownManager.shutdown());
 process.on('SIGINT', () => shutdownManager.shutdown());
+process.on('unhandledRejection', (reason, promise) => {
+    winston.error(util.inspect(promise, {depth: 4}));
+});
