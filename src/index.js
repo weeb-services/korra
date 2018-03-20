@@ -99,7 +99,7 @@ let init = async() => {
     const server = app.listen(config.port, config.host);
     shutdownManager = new ShutdownHandler(server, registrator, null, pkg.name);
     if (registrator) {
-        await registrator.register(pkg.name, [config.env], config.port);
+        await registrator.register(pkg.serviceName, [config.env], config.port);
     }
     winston.info(`Server started on ${config.host}:${config.port}`);
     process.once('exit', () => {

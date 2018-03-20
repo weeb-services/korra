@@ -1,8 +1,9 @@
 {
   "name": "korra",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "a simple image generation api",
   "main": "src/index.js",
+  "serviceName": "auto-image",
   "dependencies": {
     "@weeb_services/wapi-core": "^1.4.1",
     "axios": "^0.17.1",
