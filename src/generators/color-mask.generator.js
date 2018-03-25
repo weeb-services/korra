@@ -16,9 +16,9 @@ async function _colorize(typeParams) {
 
 function _applyColor(base, image, color) {
     for (let i = 0; i < base.bitmap.width * base.bitmap.height * 4; i += 4) {
-        if (image.bitmap.data[i] === 255 && image.bitmap.data[i + 1] === 255 && image.bitmap.data[i + 2] === 255) {
+		if (image.bitmap.data[i] === 255 && image.bitmap.data[i + 1] === 0 && image.bitmap.data[i + 2] === 0) { // red mask
             for (let n = 0; n < color.length; n++) {
-                base.bitmap.data[i + n] = color[n];
+                base.bitmap.data[i + n] = base.bitmap.data[i + n] * (color[n] / 255);
             }
         }
     }
