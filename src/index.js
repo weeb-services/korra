@@ -97,7 +97,7 @@ let init = async() => {
     app.set('view engine', 'ejs');
 
     const server = app.listen(config.port, config.host);
-    shutdownManager = new ShutdownHandler(server, registrator, null, pkg.name);
+    shutdownManager = new ShutdownHandler(server, registrator, null, pkg.serviceName);
     if (registrator) {
         await registrator.register(pkg.serviceName, [config.env], config.port);
     }
