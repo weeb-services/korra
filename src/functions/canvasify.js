@@ -23,7 +23,7 @@ async function canvasify(input) {
 				throw new Error(`Invalid URL`);
 			}
 
-			if (['http', 'https'].includes(url.protocol)) throw new Error(`Invalid URL protocol`);
+			if (!['http:', 'https:'].includes(url.protocol)) throw new Error(`Invalid URL protocol`);
 
 			let head;
 			try {
