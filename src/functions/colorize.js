@@ -11,7 +11,7 @@ async function colorize(options) {
 
 	if (options.color) { // If a color exists, colorize, if not just skip to use as normal layer
 		const color = tinycolor(options.color);
-		if (!color.isValid()) throw new Error(`colorize: Invalid color: ${options.color}`);
+		if (!color.isValid()) throw new Error(`Invalid color: ${color}`);
 		const mode = options.mode || 'hsl-color';
 		const ctx = canvas.getContext('2d');
 
@@ -31,7 +31,7 @@ async function colorize(options) {
 			ctx.drawImage(innerCanvas, 0, 0);
 			ctx.restore();
 		} else {
-			throw new Error(`colorize: Invalid mode: ${mode}`);
+			throw new Error(`Invalid mode: ${mode}`);
 		}
 	}
 
