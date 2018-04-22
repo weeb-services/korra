@@ -72,10 +72,11 @@ const init = async () => {
 	app.use(new PermMiddleware(pkg.name, config.env).middleware());
 
 	// Routers
-	app.use(new GenericRouter(pkg.version, `Welcome to the ${pkg.name} api`, `${pkg.name}-${config.env}`, permNodes).router());
+	app.use(new GenericRouter(pkg.version, `Welcome to the ${pkg.name} API`, `${pkg.name}-${config.env}`, permNodes).router());
 
 	// Add custom routers here:
 	app.use(new ImageRouter().router());
+
 	// Always use this last
 	app.use(new WildcardRouter().router());
 

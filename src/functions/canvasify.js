@@ -35,8 +35,7 @@ async function canvasify(input) {
 			if (!['image/jpeg', 'image/png', 'image/gif'].includes(head.headers['content-type'])) throw new Error(`Invalid content type`);
 
 			try {
-				data = await axios.get(url.href, { responseType: 'arraybuffer' });
-				data = data.data;
+				data = (await axios.get(url.href, { responseType: 'arraybuffer' })).data;
 			} catch (e) {
 				throw new Error('Failed to load image from URL');
 			}

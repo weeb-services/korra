@@ -1,7 +1,7 @@
 {
   "name": "korra",
   "version": "2.0.0-alpha",
-  "description": "A simple image generation api",
+  "description": "A simple image generation API",
   "main": "src/index.js",
   "serviceName": "auto-image",
   "author": "WeebServices <developers@weeb.sh>",
@@ -16,7 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@weeb_services/wapi-core": "^1.4.2",
+    "@weeb_services/wapi-core": "weeb-services/wapi-core#dev",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "canvas": "^2.0.0-alpha.12",
