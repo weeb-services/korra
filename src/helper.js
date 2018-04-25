@@ -59,4 +59,18 @@ function trackErrorRaven(Raven, error, data) {
 	});
 }
 
-module.exports = { getRandomArbitrary, def, getBuffer, distance, getImage, verifyUrl, trackErrorRaven };
+/**
+ * @description Returns all matches of re on sourceString
+ * @param {string} sourceString Thy string
+ * @param {RegExp} re Thy regexp
+ */
+function findAll(sourceString, re, aggregator = []) {
+	const arr = re.exec(sourceString);
+
+	if (arr === null) return aggregator;
+
+	const newString = sourceString.slice(arr.index + arr[0].length);
+	return findAll(newString, re, aggregator.concat([arr]));
+}
+
+module.exports = { getRandomArbitrary, def, getBuffer, distance, getImage, verifyUrl, trackErrorRaven, findAll };
