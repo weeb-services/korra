@@ -1,6 +1,5 @@
 'use strict';
 
-const { CanvasRenderingContext2D } = require('canvas');
 const helper = require('../helper');
 
 /**
@@ -18,29 +17,28 @@ function drawText(ctx, text, box, options) {
 
 	options.hs = helper.def(options.hs, ctx.measureText(' ').width); // Default hs to a single space witdh
 	if (options.vs === undefined) {
-		let font = ctx.font.match(/^(\d+)px/);
+		const font = ctx.font.match(/^(\d+)px/);
 		if (font) {
-			options.vs = parseInt(font[1]);
+			options.vs = parseInt(font[1], 10);
 		} else {
-			throw new Error(`Either options.vs has to be defined or ctx.font's size must be in pixels`)
+			throw new Error(`Either options.vs has to be defined or ctx.font's size must be in pixels`);
 		}
 	}
 	options.offsetX = helper.def(options.offsetX, 0);
 	options.offsetY = helper.def(options.offsetY, 0);
 
-	console.log(options, text, box);
+	const words = helper.findAll(text, /\S+/).map(e => e[0]); // Split the words
+	const sizes = words.map(e => ctx.measureText(e)); // Get the words sizes
+	const lines = [];
 
-	let words = helper.findAll(text, /\S+/).map(e => e[0]); // Split the words
-	let sizes = words.map(e => ctx.measureText(e)); // Get the words sizes
-	let lines = [];
-
-	let getWidth = (from, to) => sizes.slice(from, to).reduce((a, c) => a + c.width + options.hs, 0); // Get text width from->to adding horizontal spacing
+	const getWidth = (from, to) => sizes.slice(from, to).reduce((a, c) => a + c.width + options.hs, 0); // Get text width from->to adding horizontal spacing
 
 	let current = 0; // Current word
-	while(current < words.length) { // While we still have words left
+	while (current < words.length) { // While we still have words left
 		if ((lines.length + 1) * options.vs > box.h) break; // Prevent up and down bleeding, could be put as an option
-		let width, size = 1; // Width and size of the current line
-		while(current + size <= words.length) {
+		let width;
+		let size = 1; // Width and size of the current line
+		while (current + size <= words.length) {
 			width = getWidth(current, current + size);
 			if (width > box.w) {
 				if (size > 1) { // If not first word in line, reduce size and recalc width
@@ -51,7 +49,7 @@ function drawText(ctx, text, box, options) {
 			}
 			size++;
 		}
-		lines.push({width: width, sizes: sizes.slice(current, current + size), words: words.slice(current, current + size)});
+		lines.push({ width: width, sizes: sizes.slice(current, current + size), words: words.slice(current, current + size) });
 		current += size;
 	}
 
@@ -60,13 +58,14 @@ function drawText(ctx, text, box, options) {
 		line.words.forEach((word, windex) => {
 			ctx.fillText(
 				word,
-				box.x + (box.w - line.width) / 2 + xoffset + options.offsetX,
-				box.y + (box.h - lines.length * options.vs) / 2 + lindex * options.vs + options.offsetY);
-			if (options.stroke)
+				box.x + ((box.w - line.width) / 2) + xoffset + options.offsetX,
+				box.y + ((box.h - (lines.length * options.vs)) / 2) + (lindex * options.vs) + options.offsetY);
+			if (options.stroke) {
 				ctx.strokeText(
 					word,
-					box.x + (box.w - line.width) / 2 + xoffset + options.offsetX,
-					box.y + (box.h - lines.length * options.vs) / 2 + lindex * options.vs + options.offsetY);
+					box.x + ((box.w - line.width) / 2) + xoffset + options.offsetX,
+					box.y + ((box.h - (lines.length * options.vs)) / 2) + (lindex * options.vs) + options.offsetY);
+			}
 			xoffset += line.sizes[windex].width + options.hs; // Add the current word's width and horizontal spacing
 		});
 	});
