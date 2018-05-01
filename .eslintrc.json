@@ -10,7 +10,7 @@
 	"rules": {
 		"curly": [
 			"error",
-			"multi-line"
+			"all"
 		],
 		"object-curly-spacing": [
 			"error",
@@ -28,6 +28,9 @@
 			"always-multiline"
 		],
 		"prefer-const": [
+			"error"
+		],
+		"no-var": [
 			"error"
 		]
 	}

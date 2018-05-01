@@ -11,8 +11,6 @@ const permNodes = require('./permNodes.json');
 const GenericRouter = require('@weeb_services/wapi-core').GenericRouter;
 const WildcardRouter = require('@weeb_services/wapi-core').WildcardRouter;
 
-const ImageRouter = require('./routers/image.router');
-
 const AuthMiddleware = require('@weeb_services/wapi-core').AccountAPIMiddleware;
 const PermMiddleware = require('@weeb_services/wapi-core').PermMiddleware;
 const TrackMiddleware = require('@weeb_services/wapi-core').TrackingMiddleware;
@@ -24,6 +22,11 @@ const ShutdownHandler = require('@weeb_services/wapi-core').ShutdownHandler;
 
 const config = require('../config/main');
 const util = require('util');
+
+const { Router, Require, Constants: { HTTPCodes } } = require('./core');
+const helper = require('./helper');
+
+const routes = Require.requireRecusive('src/routes');
 
 let registrator;
 
@@ -74,8 +77,21 @@ const init = async () => {
 	// Routers
 	app.use(new GenericRouter(pkg.version, `Welcome to the ${pkg.name} API`, `${pkg.name}-${config.env}`, permNodes).router());
 
-	// Add custom routers here:
-	app.use(new ImageRouter().router());
+	new Router(routes, (e, req, res) => {
+		try {
+			if (req.Raven) {
+				helper.trackErrorRaven(req.Raven, e, { req, user: req.account });
+			}
+			winston.error(e);
+		} catch (e) {
+			// Ignore
+		}
+
+		res.status(HTTPCodes.INTERNAL_SERVER_ERROR).json({
+			status: HTTPCodes.INTERNAL_SERVER_ERROR,
+			message: 'Internal Server Error',
+		});
+	}).register(app);
 
 	// Always use this last
 	app.use(new WildcardRouter().router());

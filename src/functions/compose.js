@@ -6,8 +6,8 @@ const util = require('util');
 const { createCanvas, Image } = require('canvas');
 
 const helper = require('../helper');
-const drawText = require('../functions/draw-text');
-const drawImage = require('../functions/draw-image');
+const drawText = require('./drawText');
+const drawImage = require('./drawImage');
 
 const asyncReadFile = util.promisify(fs.readFile);
 

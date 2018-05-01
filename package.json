@@ -1,33 +1,35 @@
 {
-  "name": "korra",
-  "version": "2.0.0-alpha",
-  "description": "A simple image generation API",
-  "main": "src/index.js",
-  "serviceName": "auto-image",
-  "author": "WeebServices <developers@weeb.sh>",
-  "contributors": [
-    "Wolke <wolke@weeb.sh>",
-    "TheAkio <akio@weeb.sh>",
-    "LazyShpee <comemureravaud@gmail.com>"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "@weeb_services/wapi-core": "weeb-services/wapi-core#dev",
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.2",
-    "canvas": "^2.0.0-alpha.12",
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "raven": "^2.5.0",
-    "tinycolor2": "^1.4.1",
-    "winston": "^2.4.1"
-  },
-  "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-xo": "^0.20.1"
-  }
+	"name": "korra",
+	"version": "2.0.0-alpha",
+	"description": "A simple image generation API",
+	"main": "src/index.js",
+	"serviceName": "auto-image",
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"author": "WeebServices <developers@weeb.sh>",
+	"contributors": [
+		"Wolke <wolke@weeb.sh>",
+		"Akio <akio@weeb.sh>",
+		"LazyShpee <comemureravaud@gmail.com>"
+	],
+	"license": "MIT",
+	"scripts": {
+		"start": "node src/index.js"
+	},
+	"dependencies": {
+		"@weeb_services/wapi-core": "weeb-services/wapi-core#dev",
+		"axios": "^0.18.0",
+		"body-parser": "^1.18.2",
+		"canvas": "^2.0.0-alpha.12",
+		"cors": "^2.8.4",
+		"express": "^4.16.3",
+		"raven": "^2.5.0",
+		"tinycolor2": "^1.4.1",
+		"winston": "^2.4.1"
+	},
+	"devDependencies": {
+		"eslint": "^4.19.1",
+		"eslint-config-xo": "^0.20.1"
+	}
 }
