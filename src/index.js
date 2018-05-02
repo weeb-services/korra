@@ -6,10 +6,6 @@ const winston = require('winston');
 const cors = require('cors');
 
 const pkg = require('../package.json');
-const permNodes = require('./permNodes.json');
-
-const GenericRouter = require('@weeb_services/wapi-core').GenericRouter;
-const WildcardRouter = require('@weeb_services/wapi-core').WildcardRouter;
 
 const AuthMiddleware = require('@weeb_services/wapi-core').AccountAPIMiddleware;
 const PermMiddleware = require('@weeb_services/wapi-core').PermMiddleware;
@@ -23,10 +19,10 @@ const ShutdownHandler = require('@weeb_services/wapi-core').ShutdownHandler;
 const config = require('../config/main');
 const util = require('util');
 
-const { Router, Require, Constants: { HTTPCodes } } = require('./core');
+const { Router, Require, Constants: { HTTPCodes }, FileCache, Middleware, WildcardRouter, ServiceRouter } = require('./core');
 const helper = require('./helper');
 
-const routes = Require.requireRecusive('src/routes');
+const routes = Require.recursive('src/routes');
 
 let registrator;
 
@@ -34,12 +30,6 @@ if (config.registration && config.registration.enabled) {
 	registrator = new Registrator(config.registration.host, config.registration.token);
 }
 let shutdownManager;
-
-winston.remove(winston.transports.Console);
-winston.add(winston.transports.Console, {
-	timestamp: true,
-	colorize: true,
-});
 
 const init = async () => {
 	winston.info('Config loaded.');
@@ -57,6 +47,13 @@ const init = async () => {
 			winston.error('Raven Error', e);
 		});
 	}
+
+	// Load resources
+	const resCache = new FileCache('./resources');
+	const resLoadStart = Date.now();
+	await resCache.load();
+	winston.info(`Loaded ${resCache.size} resources in ${Date.now() - resLoadStart}ms`);
+
 	// Initialize express
 	const app = express();
 
@@ -74,10 +71,15 @@ const init = async () => {
 
 	app.use(new PermMiddleware(pkg.name, config.env).middleware());
 
-	// Routers
-	app.use(new GenericRouter(pkg.version, `Welcome to the ${pkg.name} API`, `${pkg.name}-${config.env}`, permNodes).router());
+	// Middleware for supplying the resource cache
+	new Middleware('ResCache Supplier', null, req => {
+		req.resCache = resCache;
+	}).register(app);
 
-	new Router(routes, (e, req, res) => {
+	// Routers
+	new ServiceRouter().register(app);
+
+	new Router('ImageGen', routes, (e, req, res) => {
 		try {
 			if (req.Raven) {
 				helper.trackErrorRaven(req.Raven, e, { req, user: req.account });
@@ -94,7 +96,7 @@ const init = async () => {
 	}).register(app);
 
 	// Always use this last
-	app.use(new WildcardRouter().router());
+	new WildcardRouter().register(app);
 
 	const server = app.listen(config.port, config.host);
 	shutdownManager = new ShutdownHandler(server, registrator, null, pkg.serviceName);

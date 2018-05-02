@@ -1,8 +1,8 @@
 'use strict';
 
-const { Route, Constants: { HTTPCodes } } = require('../core');
+const { Route, Constants: { HTTPCodes } } = require('../../core');
 
-const GenerateAwooo = require('./GenerateAwooo');
+const GenerateAwooo = require('../GenerateAwooo');
 
 class Generate extends Route {
 	constructor() {
@@ -13,7 +13,8 @@ class Generate extends Route {
 
 	async call(req, res) {
 		if (req.query.type === 'awooo') {
-			this.awooo.call({
+			await this.awooo.call({
+				resCache: req.resCache,
 				query: {
 					hair: req.query.hair,
 					face: req.query.face,

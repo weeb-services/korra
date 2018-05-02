@@ -17,10 +17,10 @@ async function canvasify(input) {
 		return input.canvas;
 	}
 
-	if (typeof input === 'string' || typeof input === Buffer) {
+	if (typeof input === 'string' || input instanceof Buffer) {
 		let data;
 
-		if (typeof input === Buffer) {
+		if (input instanceof Buffer) {
 			data = input;
 		} else if (input.startsWith('url+')) {
 			let url;

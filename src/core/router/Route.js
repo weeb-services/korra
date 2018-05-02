@@ -10,12 +10,13 @@ class Route {
 	 * @param {string} path The path this route should be registered on
 	 * @param {string[]=} permissions The permissions needed to use this route
 	 */
-	constructor(method, path, permissions) {
+	constructor(method, path, permissions, requireAccount = true) {
 		this.method = method.toUpperCase();
 		this.path = path;
 
 		this._aliases = [];
 		this._permissions = permissions || [];
+		this._requireAccount = Boolean(requireAccount);
 
 		this.alias(method, path);
 	}
@@ -30,6 +31,10 @@ class Route {
 
 	get permissions() {
 		return this._permissions;
+	}
+
+	get requireAccount() {
+		return this._requireAccount;
 	}
 
 	/**

@@ -13,41 +13,44 @@ class Awooo extends Route {
 	async call(req, res) {
 		const hair = req.query.hair ? tinycolor(req.query.hair) : null;
 		if (hair && !hair.isValid()) {
-			return res.status(HTTPCodes.BAD_REQUEST).json({
+			res.status(HTTPCodes.BAD_REQUEST).json({
 				status: HTTPCodes.BAD_REQUEST,
 				message: 'Invalid hair color',
 			});
+			return;
 		}
 
 		const face = req.query.face ? tinycolor(req.query.face) : null;
 		if (face && !face.isValid()) {
-			return res.status(HTTPCodes.BAD_REQUEST).json({
+			res.status(HTTPCodes.BAD_REQUEST).json({
 				status: HTTPCodes.BAD_REQUEST,
 				message: 'Invalid face color',
 			});
+			return;
 		}
 
 		const mode = req.query.mode ? req.query.mode : 'hsl-color';
 		if (!colorize.Modes.includes(mode)) {
-			return res.status(HTTPCodes.BAD_REQUEST).json({
+			res.status(HTTPCodes.BAD_REQUEST).json({
 				status: HTTPCodes.BAD_REQUEST,
 				message: 'Invalid mode',
 				validModes: colorize.Modes,
 			});
+			return;
 		}
 
-		const canvas = await canvasify('resources/awooo/base.png');
+		const canvas = await canvasify(req.resCache.get('awooo/base.png'));
 
 		await colorize({
 			on: canvas,
-			source: 'resources/awooo/hair.png',
+			source: req.resCache.get('awooo/hair.png'),
 			color: hair,
 			mode,
 		});
 
 		await colorize({
 			on: canvas,
-			source: 'resources/awooo/face.png',
+			source: req.resCache.get('awooo/face.png'),
 			color: face,
 			mode,
 		});
