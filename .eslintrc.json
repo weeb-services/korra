@@ -8,10 +8,6 @@
 		"node": true
 	},
 	"rules": {
-		"curly": [
-			"error",
-			"all"
-		],
 		"object-curly-spacing": [
 			"error",
 			"always"

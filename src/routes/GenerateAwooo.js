@@ -2,7 +2,7 @@
 
 const tinycolor = require('tinycolor2');
 
-const { Route, Constants: { HTTPCodes } } = require('../core');
+const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
 const { canvasify, colorize } = require('../functions');
 
 class Awooo extends Route {

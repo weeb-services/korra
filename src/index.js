@@ -1,40 +1,47 @@
 'use strict';
 
+const {
+	Router,
+	Require,
+	Constants: { HTTPCodes },
+	FileCache,
+	Middleware,
+	WildcardRouter,
+	ServiceRouter,
+	Registrator,
+	ShutdownHandler,
+	Util,
+	WeebAPI,
+	PermMiddleware,
+	IrohMiddleware,
+} = require('@weeb_services/wapi-core');
+
+Util.configureWinston(require('winston'));
+WeebAPI.init();
+
+const util = require('util');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const winston = require('winston');
 const cors = require('cors');
-
-const pkg = require('../package.json');
-
-const AuthMiddleware = require('@weeb_services/wapi-core').AccountAPIMiddleware;
-const PermMiddleware = require('@weeb_services/wapi-core').PermMiddleware;
-const TrackMiddleware = require('@weeb_services/wapi-core').TrackingMiddleware;
-
 const Raven = require('raven');
 
-const Registrator = require('@weeb_services/wapi-core').Registrator;
-const ShutdownHandler = require('@weeb_services/wapi-core').ShutdownHandler;
-
-const config = require('../config/main');
-const util = require('util');
-
-const { Router, Require, Constants: { HTTPCodes }, FileCache, Middleware, WildcardRouter, ServiceRouter } = require('./core');
 const helper = require('./helper');
 
 const routes = Require.recursive('src/routes');
 
 let registrator;
-
-if (config.registration && config.registration.enabled) {
-	registrator = new Registrator(config.registration.host, config.registration.token);
+if (WeebAPI.get('config').registration && WeebAPI.get('config').registration.enabled) {
+	registrator = new Registrator();
 }
+
 let shutdownManager;
 
 const init = async () => {
 	winston.info('Config loaded.');
-	if (config.ravenKey && config.ravenKey !== '' && config.env !== 'development') {
-		Raven.config(config.ravenKey, { release: pkg.version, environment: config.env, captureUnhandledRejections: true })
+	if (WeebAPI.get('config').ravenKey && WeebAPI.get('config').ravenKey !== '' && WeebAPI.get('config').env !== 'development') {
+		Raven.config(WeebAPI.get('config').ravenKey, { release: WeebAPI.get('version'), environment: WeebAPI.get('config').env, captureUnhandledRejections: true })
 			.install((err, sendErr, eventId) => {
 				if (!sendErr) {
 					winston.info('Successfully sent fatal error with eventId ' + eventId + ' to Sentry:');
@@ -63,13 +70,13 @@ const init = async () => {
 	app.use(cors());
 
 	// Auth middleware
-	app.use(new AuthMiddleware(config.irohHost, `${pkg.name}-${config.env}`, config.whitelist).middleware());
+	new IrohMiddleware().register(app);
 
-	if (config.track) {
-		app.use(new TrackMiddleware(pkg.name, pkg.version, config.env, config.track).middleware());
-	}
+	/* If (WeebAPI.get('config').track) {
+		app.use(new TrackMiddleware(WeebAPI.pkg.name, WeebAPI.pkg.version, WeebAPI.get('config').env, WeebAPI.get('config').track).middleware());
+	} */
 
-	app.use(new PermMiddleware(pkg.name, config.env).middleware());
+	new PermMiddleware().register(app);
 
 	// Middleware for supplying the resource cache
 	new Middleware('ResCache Supplier', null, req => {
@@ -98,12 +105,15 @@ const init = async () => {
 	// Always use this last
 	new WildcardRouter().register(app);
 
-	const server = app.listen(config.port, config.host);
-	shutdownManager = new ShutdownHandler(server, registrator, null, pkg.serviceName);
+	const server = app.listen(WeebAPI.get('config').port, WeebAPI.get('config').host);
+	shutdownManager = new ShutdownHandler(server, registrator, null);
+
+	winston.info(`Server started on ${WeebAPI.get('config').host}:${WeebAPI.get('config').port}`);
+
 	if (registrator) {
-		await registrator.register(pkg.serviceName, [config.env], config.port);
+		await registrator.register();
+		winston.info(`Registered network service`);
 	}
-	winston.info(`Server started on ${config.host}:${config.port}`);
 };
 
 init()

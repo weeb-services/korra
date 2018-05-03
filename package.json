@@ -18,15 +18,10 @@
 		"start": "node src/index.js"
 	},
 	"dependencies": {
-		"@weeb_services/wapi-core": "weeb-services/wapi-core#dev",
-		"axios": "^0.18.0",
-		"body-parser": "^1.18.2",
+		"@weeb_services/wapi-core": "weeb-services/wapi-core#v2",
 		"canvas": "^2.0.0-alpha.12",
-		"cors": "^2.8.4",
-		"express": "^4.16.3",
-		"raven": "^2.5.0",
-		"tinycolor2": "^1.4.1",
-		"winston": "^3.0.0-rc5"
+		"raven": "^2.6.0",
+		"tinycolor2": "^1.4.1"
 	},
 	"devDependencies": {
 		"eslint": "^4.19.1",

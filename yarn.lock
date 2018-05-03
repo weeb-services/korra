@@ -6,17 +6,19 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@moebius/http-graceful-shutdown/-/http-graceful-shutdown-1.0.1.tgz#3e1a501c504cf77b58dacbcf599fc07e8bb8469f"
 
-"@weeb_services/wapi-core@weeb-services/wapi-core#dev":
-  version "1.4.3"
-  resolved "https://codeload.github.com/weeb-services/wapi-core/tar.gz/c6e8948f230c65870e1742f8e9f5ac556fa353ce"
+"@weeb_services/wapi-core@weeb-services/wapi-core#v2":
+  version "2.0.0"
+  resolved "https://codeload.github.com/weeb-services/wapi-core/tar.gz/91fe7bf13f33077f844a29ef5b939bd6f720862c"
   dependencies:
     "@moebius/http-graceful-shutdown" "^1.0.1"
     axios "^0.18.0"
+    body-parser "^1.18.2"
+    cors "^2.8.4"
     express "^4.16.3"
     shortid "^2.2.8"
     universal-analytics "^0.4.16"
     url-pattern "^1.0.3"
-    winston "^3.0.0-rc2"
+    winston "^3.0.0-rc5"
 
 abbrev@1:
   version "1.1.1"
@@ -1319,7 +1321,7 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raven@^2.5.0:
+raven@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/raven/-/raven-2.6.0.tgz#3806a82c9ee8cd3e75c3b7ea7bb1935aad092d0c"
   dependencies:
@@ -1745,7 +1747,7 @@ winston-transport@^3.1.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-3.2.1.tgz#5b79b294096b1a18bfe502e769491553a2cb1042"
 
-winston@^3.0.0-rc2, winston@^3.0.0-rc5:
+winston@^3.0.0-rc5:
   version "3.0.0-rc5"
   resolved "https://registry.yarnpkg.com/winston/-/winston-3.0.0-rc5.tgz#bc383d32b0e774d387a66e77290fe78766468f34"
   dependencies:

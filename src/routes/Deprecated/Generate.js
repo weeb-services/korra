@@ -1,6 +1,6 @@
 'use strict';
 
-const { Route, Constants: { HTTPCodes } } = require('../../core');
+const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
 
 const GenerateAwooo = require('../GenerateAwooo');
 
