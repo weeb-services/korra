@@ -1,6 +1,7 @@
 'use strict';
 
 const {
+	Async,
 	Router,
 	Require,
 	FileCache,
@@ -11,6 +12,7 @@ const {
 
 Util.configureWinston(require('winston'));
 
+const { registerFont } = require('canvas');
 const winston = require('winston');
 
 const routes = Require.recursive('src/routes');
@@ -22,11 +24,19 @@ class Korra extends WeebAPI {
 	}
 
 	async onLoaded() {
-		// Load resources
-		this.resCache = new FileCache('./resources');
-		const resLoadStart = Date.now();
+		// Load images
+		this.resCache = new FileCache('./res/img');
+		let start = Date.now();
 		await this.resCache.load();
-		winston.info(`Loaded ${this.resCache.size} resources in ${Date.now() - resLoadStart}ms`);
+		winston.info(`Loaded ${this.resCache.size} images in ${Date.now() - start}ms`);
+
+		// Register fonts
+		start = Date.now();
+		const fontList = await Async.readdir('res/font');
+		for (const font of fontList) {
+			registerFont(`res/font/${font}`, { family: font.split('.')[0] });
+		}
+		winston.info(`Loaded ${fontList.length} fonts in ${Date.now() - start}ms`);
 	}
 
 	async registerMiddlewares(app) {

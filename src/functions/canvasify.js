@@ -34,22 +34,18 @@ async function canvasify(input) {
 				throw new Error(`Invalid URL protocol`);
 			}
 
-			let head;
+			let response;
 			try {
-				head = await axios.head(url.href);
-			} catch (e) {
-				throw new Error('Failed to fetch head from URL');
-			}
-
-			if (!['image/jpeg', 'image/png', 'image/gif'].includes(head.headers['content-type'])) {
-				throw new Error(`Invalid content type`);
-			}
-
-			try {
-				data = (await axios.get(url.href, { responseType: 'arraybuffer' })).data;
+				response = await axios.get(url.href, { responseType: 'arraybuffer' });
 			} catch (e) {
 				throw new Error('Failed to load image from URL');
 			}
+
+			if (!['image/jpeg', 'image/png', 'image/gif'].includes(response.headers['content-type'])) {
+				throw new Error(`Invalid content type`);
+			}
+
+			data = response.data;
 		} else {
 			try {
 				data = await asyncReadFile(input);
@@ -72,7 +68,7 @@ async function canvasify(input) {
 		}
 	}
 
-	throw new Error(`Canvasify input parameter invalid`);
+	throw new Error(`canvasify: Input parameter invalid`);
 }
 
 module.exports = canvasify;
