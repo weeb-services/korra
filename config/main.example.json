@@ -2,7 +2,7 @@
   "host": "127.0.0.1",
   "port": 9030,
   "env": "development",
-  "ravenKey": "",
+  "sentry": "",
   "track": "",
   "registration": {
     "enabled": false,

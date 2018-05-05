@@ -42,4 +42,3 @@ class Korra extends WeebAPI {
 }
 
 new Korra().init();
-
