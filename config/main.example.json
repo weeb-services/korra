@@ -1,28 +1,28 @@
 {
-  "host": "127.0.0.1",
-  "port": 9030,
-  "env": "development",
-  "sentry": "",
-  "track": "",
-  "registration": {
-    "enabled": false,
-    "host": "",
-	"token": "",
-	"checks": null
-  },
-  "whitelist": [
-    {
-      "path": "/"
-    },
-    {
-      "path": "/license-template"
-    },
-    {
-      "path": "/waifu-insult-template"
-    },
-    {
-      "path": "/love-ship-template"
-    }
-  ],
-  "irohHost": "http://localhost:9010"
+	"host": "127.0.0.1",
+	"port": 9030,
+	"env": "development",
+	"sentry": "",
+	"track": "",
+	"registration": {
+		"enabled": false,
+		"host": "",
+		"token": "",
+		"checks": null
+	},
+	"whitelist": [
+		{
+			"path": "/"
+		},
+		{
+			"path": "/license-template"
+		},
+		{
+			"path": "/waifu-insult-template"
+		},
+		{
+			"path": "/love-ship-template"
+		}
+	],
+	"irohHost": "http://localhost:9010"
 }

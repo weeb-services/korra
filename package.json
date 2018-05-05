@@ -18,7 +18,7 @@
 		"start": "node src/index.js"
 	},
 	"dependencies": {
-		"@weeb_services/wapi-core": "weeb-services/wapi-core#v2",
+		"@weeb_services/wapi-core": "weeb-services/wapi-core#dev",
 		"canvas": "^2.0.0-alpha.12",
 		"tinycolor2": "^1.4.1"
 	},

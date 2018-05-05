@@ -6,9 +6,9 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@moebius/http-graceful-shutdown/-/http-graceful-shutdown-1.0.1.tgz#3e1a501c504cf77b58dacbcf599fc07e8bb8469f"
 
-"@weeb_services/wapi-core@weeb-services/wapi-core#v2":
+"@weeb_services/wapi-core@weeb-services/wapi-core#dev":
   version "2.0.0"
-  resolved "https://codeload.github.com/weeb-services/wapi-core/tar.gz/1075767a0d4589ce478242d4e910f7d1c3cbacd6"
+  resolved "https://codeload.github.com/weeb-services/wapi-core/tar.gz/da1fb18183897cb13b78fd29c5528b4aa2820397"
   dependencies:
     "@moebius/http-graceful-shutdown" "^1.0.1"
     axios "^0.18.0"
