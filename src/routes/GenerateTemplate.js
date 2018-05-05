@@ -5,7 +5,7 @@ const { canvasify, compose, drawImage } = require('../functions');
 
 class Template extends Route {
 	constructor() {
-		super('GET', '/template/:name', ['generate_simple']);
+		super('POST', '/template/:name', ['generate_simple']);
 	}
 
 	async call(req, res) {
@@ -17,7 +17,7 @@ class Template extends Route {
 			};
 		}
 
-		const mode = req.query.mode ? req.query.mode : 'fill';
+		const mode = req.body.mode ? req.body.mode : 'fill';
 		if (!drawImage.Modes.includes(mode)) {
 			return {
 				status: HTTPCodes.BAD_REQUEST,
@@ -28,7 +28,7 @@ class Template extends Route {
 
 		let image;
 		try {
-			image = req.query.image ? await canvasify(`url+${req.query.image}`) : null;
+			image = req.body.image ? await canvasify(`url+${req.body.image}`) : null;
 		} catch (e) {
 			return {
 				status: HTTPCodes.BAD_REQUEST,
@@ -37,7 +37,7 @@ class Template extends Route {
 		}
 
 		const canvas = await compose(this.getTemplate(req), {
-			text: req.query.text,
+			text: req.body.text,
 			image,
 			mode,
 		});
