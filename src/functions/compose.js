@@ -39,7 +39,7 @@ async function compose(template, options) {
 			ctx.fillStyle = template.bgColor;
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 		} else {
-			throw new Error(`Background color ${template.bgColor} isn't valid`);
+			throw new Error(`compose: Background color ${template.bgColor} isn't valid`);
 		}
 	}
 

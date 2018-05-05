@@ -1,14 +1,14 @@
 'use strict';
 
 const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
-const { canvasify, compose } = require('../functions');
+const { canvasify, compose, drawImage } = require('../functions');
 
 class Template extends Route {
 	constructor() {
 		super('GET', '/template/:name', ['generate_simple']);
 	}
 
-	async call(req, res, alias) {
+	async call(req, res) {
 		const template = this.getTemplate(req);
 		if (!template) {
 			return {
@@ -17,12 +17,29 @@ class Template extends Route {
 			};
 		}
 
-		const image = req.query.image ? await canvasify(`url+${req.query.image}`) : null;
+		const mode = req.query.mode ? req.query.mode : 'fill';
+		if (!drawImage.Modes.includes(mode)) {
+			return {
+				status: HTTPCodes.BAD_REQUEST,
+				message: 'Invalid mode',
+				validModes: drawImage.Modes,
+			};
+		}
 
-		const canvas = await compose(this.getTemplate(req, alias), {
+		let image;
+		try {
+			image = req.query.image ? await canvasify(`url+${req.query.image}`) : null;
+		} catch (e) {
+			return {
+				status: HTTPCodes.BAD_REQUEST,
+				message: `${e.message}`,
+			};
+		}
+
+		const canvas = await compose(this.getTemplate(req), {
 			text: req.query.text,
 			image,
-			mode: req.query.mode,
+			mode,
 		});
 
 		res.set('Content-Type', 'image/png');

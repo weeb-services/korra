@@ -13,19 +13,19 @@ class Generate extends Route {
 
 	async call(req, res) {
 		if (req.query.type === 'awooo') {
-			await this.awooo.call({
+			return this.awooo.call({
 				resCache: req.resCache,
 				query: {
 					hair: req.query.hair,
 					face: req.query.face,
 				},
 			}, res);
-		} else {
-			return {
-				status: HTTPCodes.BAD_REQUEST,
-				message: 'Invalid type',
-			};
 		}
+
+		return {
+			status: HTTPCodes.BAD_REQUEST,
+			message: 'Invalid type',
+		};
 	}
 }
 

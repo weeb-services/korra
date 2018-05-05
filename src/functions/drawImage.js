@@ -25,7 +25,7 @@ async function drawImage(options = {}) {
 	}
 	options.mode = options.mode || 'fill';
 	if (!Modes.includes(options.mode)) {
-		throw new Error('drawImage: Invalid mode');
+		throw new Error(`drawImage: Invalid mode ${options.mode}`);
 	}
 
 	// Load images

@@ -15,7 +15,7 @@ async function contextify(input) {
 		return (await canvasify(input)).getContext('2d');
 	}
 
-	throw new Error(`Contextify input parameter invalid`);
+	throw new Error(`contextify: Input parameter invalid`);
 }
 
 module.exports = contextify;
