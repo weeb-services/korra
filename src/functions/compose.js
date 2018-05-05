@@ -59,7 +59,9 @@ async function compose(template, options) {
 			text: options.text,
 			box: template.boxText || template.box,
 			font: template.font,
-			offsetY: template.font.size,
+			offset: {
+				y: template.font.size,
+			},
 			rotate: template.rotate,
 		});
 	}

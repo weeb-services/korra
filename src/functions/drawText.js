@@ -7,22 +7,34 @@ const Util = require('../Util');
 const contextify = require('./contextify');
 
 /**
- * @description Draws text in a box on a canvas context, excess /\S/ are removed
- * @param {CanvasRenderingContext2D} ctx Canvas context to draw on
- * @param {string} text Text to write
- * @param {Object} box {x, y, w, h}
- * @param {number} hs Horizontal separation (pixels between words)
- * @param {number} vs Vertical separation (pixels between starts of a line, usually font size)
- * @param {Object} options {stroke: false, hs: space size, vs: line height}
+ * Additional info
+ *
+ * options.font.hs Horizontal separation (pixels between words)
+ * options.font.vs Vertical separation (pixels between starts of a line, usually font size)
  */
+
+/**
+ * Draws text in a box on a canvas context, excess /\S/ are removed
+ *
+ * @param {object} options The options
+ * @param {string|Buffer|HTMLCanvasElement|CanvasRenderingContext2D} options.on The canvas or context to draw on
+ * @param {string=} options.text The text to write
+ * @param {{x: number, y: number, w: number, h: number}} options.box The box where the text should be drawn in
+ * @param {{family: string, size: number, vs: number, hs: number, color: string|object}=} options.font Font information
+ * @param {{x: number, y: number, angle: number}=} options.rotate Text rotation options
+ * @param {boolean=} options.stroke Whether to draw the stroke (outlines of each character) or not
+ * @param {{x: number, y: number}=} options.offset The offset of the text in the box
+ */
+// eslint-disable-next-line complexity
 async function drawText(options = {}) {
 	// Validation
 	if (!options.text) {
 		options.text = 'weeb.sh';
 	}
 	Util.validateBox(options.box, 'drawText');
-	options.offsetX = options.offsetX == null ? 0 : options.offsetX;
-	options.offsetY = options.offsetY == null ? 0 : options.offsetY;
+	options.offset = options.offset || {};
+	options.offset.x = options.offset.x == null ? 0 : options.offset.x;
+	options.offset.y = options.offset.y == null ? 0 : options.offset.y;
 
 	// Load image
 	const ctx = await contextify(options.on);
@@ -45,16 +57,18 @@ async function drawText(options = {}) {
 		if (options.font.size && options.font.family) {
 			ctx.font = `${options.font.size}px ${options.font.family}`;
 		}
+	} else {
+		options.font = {};
 	}
 
 	// More validation
-	options.hs = options.hs == null ? ctx.measureText(' ').width : options.hs;
-	if (options.vs == null) {
+	options.font.hs = options.font.hs == null ? ctx.measureText(' ').width : options.font.hs;
+	if (options.font.vs == null) {
 		const font = ctx.font.match(/^(\d+)px/);
 		if (font) {
-			options.vs = parseInt(font[1], 10);
+			options.font.vs = parseInt(font[1], 10);
 		} else {
-			throw new Error(`drawText: Either options.vs has to be defined or ctx.font's size must be in pixels`);
+			throw new Error(`drawText: Either options.font.vs has to be defined or ctx.font's size must be in pixels`);
 		}
 	}
 
@@ -73,14 +87,14 @@ async function drawText(options = {}) {
 	const sizes = words.map(e => ctx.measureText(e));
 
 	// Get text width from->to adding horizontal spacing
-	const getWidth = (from, to) => sizes.slice(from, to).reduce((a, c) => a + c.width + options.hs, 0);
+	const getWidth = (from, to) => sizes.slice(from, to).reduce((a, c) => a + c.width + options.font.hs, 0);
 
 	const lines = [];
 	// Current word
 	let current = 0;
 	// While we still have words left
 	while (current < words.length) {
-		if ((lines.length + 1) * options.vs > options.box.h) {
+		if ((lines.length + 1) * options.font.vs > options.box.h) {
 			// Prevent up and down bleeding, could be put as an option
 			break;
 		}
@@ -119,19 +133,19 @@ async function drawText(options = {}) {
 		line.words.forEach((word, windex) => {
 			ctx.fillText(
 				word,
-				options.box.x + ((options.box.w - line.width) / 2) + xoffset + options.offsetX,
-				options.box.y + ((options.box.h - (lines.length * options.vs)) / 2) + (lindex * options.vs) + options.offsetY,
+				options.box.x + ((options.box.w - line.width) / 2) + xoffset + options.offset.x,
+				options.box.y + ((options.box.h - (lines.length * options.font.vs)) / 2) + (lindex * options.font.vs) + options.offset.y,
 			);
 			if (options.stroke) {
 				ctx.strokeText(
 					word,
-					options.box.x + ((options.box.w - line.width) / 2) + xoffset + options.offsetX,
-					options.box.y + ((options.box.h - (lines.length * options.vs)) / 2) + (lindex * options.vs) + options.offsetY,
+					options.box.x + ((options.box.w - line.width) / 2) + xoffset + options.offset.x,
+					options.box.y + ((options.box.h - (lines.length * options.font.vs)) / 2) + (lindex * options.font.vs) + options.offset.y,
 				);
 			}
 
 			// Add the current word's width and horizontal spacing
-			xoffset += line.sizes[windex].width + options.hs;
+			xoffset += line.sizes[windex].width + options.font.hs;
 		});
 	});
 
