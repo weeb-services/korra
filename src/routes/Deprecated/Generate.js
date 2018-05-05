@@ -6,7 +6,7 @@ const GenerateAwooo = require('../GenerateAwooo');
 
 class Generate extends Route {
 	constructor() {
-		super('GET', '/generate', ['generate-simple']);
+		super('GET', '/generate', ['generate_simple']);
 
 		this.awooo = new GenerateAwooo();
 	}

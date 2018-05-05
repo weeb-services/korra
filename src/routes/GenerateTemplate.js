@@ -5,7 +5,7 @@ const { canvasify, compose, drawImage } = require('../functions');
 
 class Template extends Route {
 	constructor() {
-		super('POST', '/template/:name', ['generate_simple']);
+		super('POST', '/template/:name', ['generate_template']);
 	}
 
 	async call(req, res) {

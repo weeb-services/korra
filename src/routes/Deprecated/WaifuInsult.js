@@ -6,7 +6,7 @@ const GenerateTemplate = require('../GenerateTemplate');
 
 class WaifuInsult extends Route {
 	constructor() {
-		super('POST', '/waifu-insult', ['generate-simple']);
+		super('POST', '/waifu-insult', ['generate_waifu_insult']);
 
 		this.template = new GenerateTemplate();
 	}
