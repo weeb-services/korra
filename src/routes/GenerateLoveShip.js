@@ -5,7 +5,7 @@ const { createCanvas } = require('canvas');
 const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
 const { canvasify, drawImage, drawImageOrText } = require('../functions');
 
-class Awooo extends Route {
+class LoveShip extends Route {
 	constructor() {
 		super('POST', '/love-ship', ['generate_love_ship']);
 
@@ -40,4 +40,4 @@ class Awooo extends Route {
 	}
 }
 
-module.exports = Awooo;
+module.exports = LoveShip;
