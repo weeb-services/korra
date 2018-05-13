@@ -4,8 +4,7 @@ const tinycolor = require('tinycolor2');
 const { createCanvas } = require('canvas');
 
 const canvasify = require('./canvasify');
-const drawText = require('./drawText');
-const drawImage = require('./drawImage');
+const drawImageOrText = require('./drawImageOrText');
 
 /**
  * Doin stuff
@@ -43,28 +42,17 @@ async function compose(template, options) {
 		}
 	}
 
-	if (options.image) {
-		// Draw the image
-		await drawImage({
-			on: ctx,
-			image: options.image,
-			box: template.boxImage || template.box,
-			mode: options.mode,
-			rotate: template.rotate,
-		});
-	} else {
-		// Draw the text
-		await drawText({
-			on: ctx,
-			text: options.text,
-			box: template.boxText || template.box,
-			font: template.font,
-			offset: {
-				y: template.font.size,
-			},
-			rotate: template.rotate,
-		});
-	}
+	await drawImageOrText({
+		on: ctx,
+		image: options.image,
+		box: template.box,
+		boxImage: template.boxImage,
+		boxText: template.boxText,
+		mode: options.mode,
+		rotate: template.rotate,
+		text: options.text,
+		font: template.font,
+	});
 
 	// Apply mask if needed
 	if (template.mask) {

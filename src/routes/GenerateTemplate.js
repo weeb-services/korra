@@ -103,6 +103,15 @@ class Template extends Route {
 					font: { family: 'Anisa', size: 56, hs: 10 },
 					bgColor: '#fff',
 				};
+			case 'i-love-this-picture':
+				return {
+					image: req.resCache.get('template/i-love-this-picture.png'),
+					rotate: { x: 680, y: 360, angle: -3.2 },
+					boxImage: { x: 65, y: 0, w: 1180, h: 735 },
+					boxText: { x: 170, y: 0, w: 980, h: 680 },
+					font: { family: 'Anisa', size: 100, hs: 10 },
+					bgColor: '#cfb07f',
+				};
 			default:
 				return null;
 		}

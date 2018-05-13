@@ -56,7 +56,8 @@ class Awooo extends Route {
 		});
 
 		res.set('Content-Type', 'image/png');
-		res.status(200).send(canvas.toBuffer());
+		res.status(200);
+		canvas.pngStream().pipe(res);
 	}
 }
 
