@@ -3,7 +3,7 @@
 	"version": "2.0.0-alpha",
 	"description": "A simple image generation API",
 	"main": "src/index.js",
-	"serviceName": "auto-image",
+	"serviceName": "auto-image-v2",
 	"engines": {
 		"node": ">=8.0.0"
 	},
