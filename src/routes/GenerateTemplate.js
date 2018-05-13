@@ -112,6 +112,15 @@ class Template extends Route {
 					font: { family: 'Bariol', size: 33, hs: 5 },
 					bgColor: '#cfb07f',
 				};
+			case 'zero-two':
+				return {
+					image: req.resCache.get('template/zero-two.png'),
+					rotate: { x: 150, y: 380, angle: -7 },
+					boxImage: { x: 65, y: 250, w: 185, h: 265 },
+					boxText: { x: 80, y: 260, w: 165, h: 150 },
+					font: { family: 'Bariol', size: 25, hs: 4 },
+					bgColor: '#cfad7e',
+				};
 			default:
 				return null;
 		}
