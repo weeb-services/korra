@@ -106,10 +106,10 @@ class Template extends Route {
 			case 'i-love-this-picture':
 				return {
 					image: req.resCache.get('template/i-love-this-picture.png'),
-					rotate: { x: 680, y: 360, angle: -3.2 },
-					boxImage: { x: 65, y: 0, w: 1180, h: 735 },
-					boxText: { x: 170, y: 0, w: 980, h: 680 },
-					font: { family: 'Anisa', size: 100, hs: 10 },
+					rotate: { x: 450, y: 270, angle: -3.2 },
+					boxImage: { x: 45, y: 0, w: 820, h: 510 },
+					boxText: { x: 130, y: 20, w: 660, h: 450 },
+					font: { family: 'Bariol', size: 56, hs: 10 },
 					bgColor: '#cfb07f',
 				};
 			default:
