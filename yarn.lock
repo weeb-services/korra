@@ -8,7 +8,7 @@
 
 "@weeb_services/wapi-core@weeb-services/wapi-core#dev":
   version "2.0.0"
-  resolved "https://codeload.github.com/weeb-services/wapi-core/tar.gz/ea454f8ea898dff5ac9f5c60795cabf63b66f0b4"
+  resolved "https://codeload.github.com/weeb-services/wapi-core/tar.gz/e4e732b6432363233f812c4387ce266672ba13dc"
   dependencies:
     "@moebius/http-graceful-shutdown" "^1.0.1"
     axios "^0.18.0"
