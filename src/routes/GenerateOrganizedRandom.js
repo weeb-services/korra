@@ -63,6 +63,39 @@ class OrganizedRandom extends Route {
 						},
 					],
 				};
+			case 'won':
+				return {
+					base: req.resCache.get('random/wan_back.png'),
+					elements: [
+						{
+							source: req.resCache.get('random/wan_mouth.png'),
+							originalPosition: { x: 399, y: 610 },
+							randomCircle: {
+								x: 399,
+								y: 610,
+								range: { max: 100 },
+							},
+						},
+						{
+							source: req.resCache.get('random/wan_eye_right.png'),
+							originalPosition: { x: 562, y: 433 },
+							randomCircle: {
+								x: 562,
+								y: 433,
+								range: { max: 100 },
+							},
+						},
+						{
+							source: req.resCache.get('random/wan_eye_left.png'),
+							originalPosition: { x: 295, y: 460 },
+							randomCircle: {
+								x: 295,
+								y: 460,
+								range: { max: 100 },
+							},
+						},
+					],
+				};
 			default:
 				return null;
 		}
