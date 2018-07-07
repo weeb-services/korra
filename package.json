@@ -18,9 +18,8 @@
 		"start": "node src/index.js"
 	},
 	"dependencies": {
-		"@weeb_services/wapi-core": "weeb-services/wapi-core#dev",
-		"canvas": "^2.0.0-alpha.12",
-		"tinycolor2": "^1.4.1"
+		"@weeb_services/gfn": "^1.0.1",
+		"@weeb_services/wapi-core": "weeb-services/wapi-core#dev"
 	},
 	"devDependencies": {
 		"eslint": "^4.19.1",

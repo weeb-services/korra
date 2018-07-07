@@ -1,7 +1,7 @@
 'use strict';
 
 const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
-const { canvasify, compose, drawImage } = require('../functions');
+const { canvasify, compose, ImageRenderMode, ImageRenderModes } = require('@weeb_services/gfn');
 
 class Template extends Route {
 	constructor() {
@@ -17,12 +17,12 @@ class Template extends Route {
 			};
 		}
 
-		const mode = req.body.mode ? req.body.mode : 'fill';
-		if (!drawImage.Modes.includes(mode)) {
+		const mode = req.body.mode ? req.body.mode : ImageRenderMode.FILL;
+		if (!ImageRenderModes.includes(mode)) {
 			return {
 				status: HTTPCodes.BAD_REQUEST,
 				message: 'Invalid mode',
-				validModes: drawImage.Modes,
+				validModes: ImageRenderModes,
 			};
 		}
 

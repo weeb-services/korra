@@ -19,7 +19,9 @@ const routes = Require.recursive('src/routes');
 
 class Korra extends WeebAPI {
 	constructor() {
-		super();
+		super({
+			enableAccounts: false,
+		});
 		this.resCache = null;
 	}
 

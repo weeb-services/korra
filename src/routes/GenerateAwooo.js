@@ -1,9 +1,7 @@
 'use strict';
 
-const tinycolor = require('tinycolor2');
-
 const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
-const { canvasify, colorize } = require('../functions');
+const { canvasify, colorize, ColorizeMode, parseColor, ColorizeModes } = require('@weeb_services/gfn');
 
 class Awooo extends Route {
 	constructor() {
@@ -11,7 +9,7 @@ class Awooo extends Route {
 	}
 
 	async call(req, res) {
-		const hair = req.query.hair ? tinycolor(req.query.hair) : null;
+		const hair = req.query.hair ? parseColor(req.query.hair) : null;
 		if (hair && !hair.isValid()) {
 			res.status(HTTPCodes.BAD_REQUEST).json({
 				status: HTTPCodes.BAD_REQUEST,
@@ -20,7 +18,7 @@ class Awooo extends Route {
 			return;
 		}
 
-		const face = req.query.face ? tinycolor(req.query.face) : null;
+		const face = req.query.face ? parseColor(req.query.face) : null;
 		if (face && !face.isValid()) {
 			res.status(HTTPCodes.BAD_REQUEST).json({
 				status: HTTPCodes.BAD_REQUEST,
@@ -29,12 +27,12 @@ class Awooo extends Route {
 			return;
 		}
 
-		const mode = req.query.mode ? req.query.mode : 'hsl-color';
-		if (!colorize.Modes.includes(mode)) {
+		const mode = req.query.mode ? req.query.mode : ColorizeMode.HSL_COLOR;
+		if (!ColorizeModes.includes(mode)) {
 			res.status(HTTPCodes.BAD_REQUEST).json({
 				status: HTTPCodes.BAD_REQUEST,
 				message: 'Invalid mode',
-				validModes: colorize.Modes,
+				validModes: ColorizeModes,
 			});
 			return;
 		}

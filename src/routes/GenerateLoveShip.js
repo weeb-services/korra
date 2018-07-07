@@ -1,9 +1,7 @@
 'use strict';
 
-const { createCanvas } = require('canvas');
-
 const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
-const { canvasify, drawImage, drawImageOrText } = require('../functions');
+const { canvasify, drawImage, drawImageOrText } = require('@weeb_services/gfn');
 
 class LoveShip extends Route {
 	constructor() {
@@ -13,7 +11,7 @@ class LoveShip extends Route {
 	}
 
 	async call(req, res) {
-		const canvas = createCanvas(this.objectSize * 3, this.objectSize);
+		const canvas = await canvasify({ width: this.objectSize * 3, height: this.objectSize });
 
 		const image = await canvasify('url+https://cdn.discordapp.com/avatars/185476724627210241/a0c639dfd2a07dbf675e8e611468b5d8.png?size=1024');
 		await drawImageOrText({

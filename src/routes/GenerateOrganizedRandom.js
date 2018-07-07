@@ -1,7 +1,7 @@
 'use strict';
 
 const { Route, Constants: { HTTPCodes } } = require('@weeb_services/wapi-core');
-const { canvasify, organizedRandom } = require('../functions');
+const { canvasify, organizedRandom } = require('@weeb_services/gfn');
 
 class OrganizedRandom extends Route {
 	constructor() {
