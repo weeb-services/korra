@@ -94,13 +94,12 @@ class Template extends Route {
 					bgColor: '#fff',
 				};
 			case 'waifu-insult':
-				// TODO This has not been adjusted yet
 				return {
 					image: req.resCache.get('template/waifu-insult.png'),
-					rotate: { x: 40.00, y: 300.00, angle: -20.00 },
-					boxImage: { x: 36, y: 290, w: 490, h: 350 },
-					boxText: { x: 46, y: 308, w: 468, h: 318 },
-					font: { family: 'Anisa', size: 56, hs: 10 },
+					rotate: { x: 150, y: 180, angle: 14 },
+					boxImage: { x: 140, y: 178, w: 110, h: 155 },
+					boxText: { x: 145, y: 170, w: 110, h: 155 },
+					font: { family: 'Anisa', size: 26, hs: 10 },
 					bgColor: '#fff',
 				};
 			case 'i-love-this-picture':
