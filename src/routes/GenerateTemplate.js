@@ -36,7 +36,7 @@ class Template extends Route {
 			};
 		}
 
-		const canvas = await compose(this.getTemplate(req), {
+		const canvas = await compose(template, {
 			text: req.body.text,
 			image,
 			mode,
