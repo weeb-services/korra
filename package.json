@@ -18,7 +18,7 @@
 		"start": "node src/index.js"
 	},
 	"dependencies": {
-		"@weeb_services/gfn": "^1.0.1",
+		"@weeb_services/gfn": "^1.1.0",
 		"@weeb_services/wapi-core": "weeb-services/wapi-core#dev"
 	},
 	"devDependencies": {
